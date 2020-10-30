@@ -104,19 +104,22 @@ class BookController extends Controller
     {
         $data = $request->all();
 
-        $book = Book::find($id);
+        $request->validate([
+            'title' => "required|max:30",
+            'author' => "required|max:50",
+            'pages' => "required|integer",
+            'edition' => "required|max:50",
+            'year' => "required|date",
+            'isbn' => [ 
+                "required",
+                "max:13",
+                Rule::unique('books')->ignore($id)
+            ],
+            'genre' => "required|max:30",
+            'image' => "required",
+        ]);
 
-        $request->validate(
-            [
-                "title" => "required|max:30",
-                "author"=> "required|max:30",
-                "edition" => "required|max:30",
-                "isbn" => "required|unique:books|size:13",
-                "year" => "required|date|",
-                "genre" => "required|max:30",
-                "pages" => "required|integer",
-            ]
-        );
+        $book = Book::find($id);
 
         $book->title = $data["title"];
         $book->author = $data["author"];

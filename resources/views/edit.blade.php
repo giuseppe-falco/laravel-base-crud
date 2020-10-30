@@ -6,7 +6,7 @@
 
 @section('mainContent')
 
-<form action="{{route("books.update", $book->id)}}" method="PUT">
+<form action="{{route("books.update", $book->id)}}" method="POST">
     @csrf
     @method("PUT")
 
@@ -56,23 +56,24 @@
 
     <input type="submit" value="Salva">
 
-    <form action="{{route("books.destroy", $book->id)}}" method="POST">
-      @csrf
-      @method("DELETE")
-      
-      <input type="submit" value="Elimina">
-    </form>
+</form>
 
-    @if ($errors->any())
-      <div>
-          <ul>
-              @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-              @endforeach
-          </ul>
-      </div>
-    @endif
+<form action="{{route("books.destroy", $book->id)}}" method="POST">
+    @csrf
+    @method("DELETE")
+    
+    <input type="submit" value="Elimina">
+</form>
 
-  </form>
+@if ($errors->any())
+    <div>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 
 @endsection
